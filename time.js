@@ -1,41 +1,62 @@
+function addZero(i) {
+    if(i < 10) {
+        i = "0" + i; 
+    }
+    return i; 
+}
 
-    function displayTime() {
-        var currentTime = new Date(); 
-        var hours = currentTime.getHours(); 
-        var minutes = currentTime.getMinutes(); 
-        var seconds = currentTime.getSeconds();
+var Gettime = (function () {
+    var obj = {
+        'lagos': [1,0], 
+        'sydney': [11,0], 
+        'london': [0,0], 
+        'tokyo': [9,0], 
+    }
+    return function (key) {
+        var city = obj[key]; 
+        return city; 
+    }
+})(); 
 
-        var meridiem = "AM"; 
-        //if hours is greater than 12 
-        if(hours > 12) {
-            hours = hours - 12; // Convert to 12-hour format
-            meridiem = "PM"; // Keep track of the meridiem
-        }
-
-        //0 AM and 0 PM should reada as 12
-        if(hours == 0) {
-            hours = 12; 
-        }
-
-        if(hours < 10){
-            hours = "0" + hours; 
-        }
-        if(minutes < 10) {
-            minutes = "0" + minutes; 
-        }
-        if(seconds < 10) {
-            seconds = "0" + seconds; 
-        }
-
-        var clockDiv = document.getElementById('clock'); //"handle" to the clocl div in the HTML
-
-        //Then set the text inside the clock div
-        //to the hours, minutes, and seconds of the current time
-        clockDiv.innerHTML = hours + ":" + minutes + ":" + seconds + " " + meridiem;  
+function setUTC() {
+    try {
+        var city = document.getElementById("selectTime").nodeValue; 
+        var date = new Date (); 
+        var utcTime = Gettime(city); 
+    }
+    catch(err) {
+        return 
     }
 
-    //Runs the displayTime function the first time 
-    displayTime(); 
+    date.setHours(date.getUTCHours()+ utcTime[0]); 
+    date.setMinutes(date.getUTCMinutes() + utcTime[1]); 
+    date.setSeconds(date.getUTCSeconds()); 
 
-    //Makes clock 'tick' by repeatedly running the displayTime function every second. 
-    setInterval(displayTime, 1000); 
+    var hour = addZero(date.getHours()); 
+    var min = addZero(date.getMinutes()); 
+    var sec = addZero(date.getSeconds()); 
+    var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]; 
+    var month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+    document.getElementById("hr").innerHTML = hour; 
+    document.getElementById("min").innerHTML = min; 
+    document.getElementById("sec").innerHTML = sec; 
+    document.getElementById("fullDate").innerHTML = days[date.getDay()] + ', ' + month[date.getMonth()] + ' ' + date.getDate() + ', ' + date.getFullYear();
+}
+
+function darkMode() {
+    console.log('dark mode worked')
+    var element = document.getElementById("container"); 
+    element.classList.toggle('dark-mode'); 
+
+    var element = document.getElementById("footer"); 
+    element.classList.toggle('dark-mode'); 
+
+    var element = document.body; 
+    element.classList.toggle('dark-mode'); 
+
+    var element = document.getElementById("header"); 
+    element.classList.toggle('dark-mode'); 
+}
+
+setInterval(setUTC,1000); 

@@ -6,15 +6,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="time.css"> 
     <script src="scripts/jquery.js"></script>
-
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+   <link rel="stylesheet" href="style.css">
+   <link rel="preconnect" href="https://fonts.gstatic.com">
+   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500&display=swap" rel="stylesheet">
     
     <title>Clock</title>
 </head>
 <body>
     <h1> Clock </h1>
-    <div id='clock'></div>
+    <div class="container container-block">
+        <div class="row time mx-auto" id="header">
+            <h3 id="head"> World Clock</h3>
+            <h1 id="fulldate"> Monday, January 00, 0000</h1>
+            <h1 id="city"></h1>
+        </div>
 
-    
+        <div class="row time" id="container">
+            <h1 class="st1" id="hr">00</h1>
+            <h1 class="st2">:</h1>
+            <h1 class="st1" id="min">00</h1>
+            <h1 class="st2">:</h1>
+            <h1 class="st1" id="sec">00</h1>
+
+            <select class="form-dropdown" onchange="setTime()" id="selectTime">
+                <option value="Lagos" class="dropdown">Lagos</option>
+                <option value="Sydney" class="dropdown">Sydney</option>
+                <option value="London" class="dropdown">London</option>
+                <option value="Tokyo" class="dropdown">Tokyo</option>
+            </select>
+        </div>
+
+        <div class="footer" id="footer">
+            <p onclick="darkMode()">The days run away like wild horses over the hills.</p>
+          </div>
+    </div>
+
     <script src="time.js" type="text/javascript"></script> 
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="app.js"></script>
+</body>
+</html>
+
 </body>
 </html>

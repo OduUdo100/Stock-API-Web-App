@@ -1,7 +1,19 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const mongoose = require("mongoose");
+
+const postRoutes = require ("./routes/posts");
 
 const app = express();
+
+//mongoose connection to the database of MongoDB Atlas!
+mongoose.connect("mongodb+srv://Andi:YbamZpIh6EK7APuQ@cluster0.xyyse.mongodb.net/Posts?retryWrites=true&w=majority")
+  .then(() => {
+    console.log("Connected to database");
+  })
+  .catch(() => {
+    console.log("Connection failed");
+  });
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
@@ -15,35 +27,10 @@ app.use((req, res, next) => {
   );
   res.setHeader(
     "Access-Control-Allow-Methods",
-    "GET,POST, PATCH, DELETE, OPTIONS");
+    "GET,POST, PATCH, PUT, DELETE, OPTIONS");
   next();
 });
 
-app.post("/api/posts", (req, res, next) => {
-  const post = req.body;
-  console.log(post);
-  res.status(201).json({
-    message: "Post added successfully"
-  }); //A new resources was created. Passed with a 201.
-});
-
-app.get('/api/posts', (req, res, next ) => {
-  const posts = [
-    {
-      id: 'asdasdas23',
-      title: 'first server',
-      content: "this is the first server"
-    },
-    {
-      id: "1231234sdsdas",
-      title: "second server",
-      content: "this is the second server"
-    }
-  ];
-  res.status(200).json({
-    message: 'Posts fetched successfully!',
-    posts: posts
-  });
-});
+app.use("/api/posts", postRoutes);
 
 module.exports = app;

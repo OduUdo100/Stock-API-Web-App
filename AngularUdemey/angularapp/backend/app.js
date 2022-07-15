@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require("mongoose");
+const path = require('path');
 
 const postRoutes = require ("./routes/posts");
 
@@ -17,6 +18,7 @@ mongoose.connect("mongodb+srv://Andi:YbamZpIh6EK7APuQ@cluster0.xyyse.mongodb.net
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
+app.use("/images", express.static(path.join("backend/images")));
 
 //Uses CORS. To allow differet servers to interact with each other
 app.use((req, res, next) => {

@@ -21,31 +21,44 @@ const storage = multer.diskStorage({
     cb(error, "backend/images");
   },
   filename: (req, file, cb) => {
-    const name = file.originalname.toLowerCase().split('').join('-');
+    const name = file.originalname.toLowerCase().split(' ').join('-');
     const ext = MIME_TYPE_MAP[file.mimetype];
-    cb(null, name + '-' + Date.now() + '.'+ ext);
+    cb(null, name + '-' + Date.now() + '.' + ext);
   }
 });
 
 router.post("", multer({storage: storage}).single("image"),  (req, res, next) => {
+  const url = req.protocol + '://' + req.get("host");
   const post = new Post({
     title: req.body.title,
-    content: req.body.content
+    content: req.body.content,
+    imagePath: url + "/images/" + req.file.filename
   });
-  post.save(); //Creates the right query and saves it to the mongodb.
-  res.status(201).json({
-    message: "Post added successfully"
-  }); //A new resources was created. Passed with a 201.
+  post.save().then(createdPost => {
+    res.status(201).json({
+      message: "Post added successfully",
+      post: {
+        ...createdPost,
+        id: createdPost._id
+      }
+    });
+  }); //Creates the right query and saves it to the mongodb.
 });
 
-router.put("/:id", (req, res, next) => {
+router.put("/:id", multer({storage: storage}).single("image"), (req, res, next) => {
+  let imagePath = req.body.imagePath;
+  if(req.file) {
+    const url = req.protocol + '://' + req.get("host");
+    imagePath = url + "/images/" + req.file.filename;
+  }
   const post = new Post({
     _id: req.body.id,
     title: req.body.title,
-    content: req.body.content
+    content: req.body.content,
+    imagePath: imagePath
   });
+  console.log(post);
   Post.updateOne({_id: req.params.id}, post).then(result => {
-    console.log(result);
     res.status(200).json({message: "update successfull"});
   })
 });

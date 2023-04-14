@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock API Web Application </title>
+    <link rel="stylesheet" type="text/css" href="/stockapi.css">
+    <script type="application/json" src="/server.js"></script>
+</head>
+<body>
+    <h1> Stock API Web App</h1>
+
+    <form id="apiform">
+        <label for="apifunction"> Select API Function: </label>
+        <select name="apifunction" id="apifunction">
+            <option value="/quote"> Get Stock Quote</option>
+            <option value="/company-news"> Get Company News</option>
+            <option value="/stock/metric"> Get Company Metric</option>
+        </select>
+        <br />
+        <label for="symbol">Symbol:</label>
+        <input type="text" name="symbol" id="symbol" />
+        <br />
+        <label for="from">From:</label>
+        <input type="date" name="from" id="from" pattern="\d{4}-\d{2}-\d{2}"  />
+        <br />
+        <label for="to">To:</label>
+        <input type="date" name="to" id="to" pattern="\d{4}-\d{2}-\d{2}" />
+        <br />
+        <label for="metric">Metric:</label>
+        <input type="text" name="metric" id="metric" placeholder="Type in 'all'" />
+        <br />
+        <input type="submit" value="Submit" />
+    </form>
+    <div id="apiresponse"></div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var apiform = document.querySelector('#apiform');
+            apiform.addEventListener('submit', function(event) {
+            event.preventDefault(); 
+            var apiUrl; 
+            switch(apiform.elements.apifunction.value){
+                case '/quote':
+                    apiUrl = '/quote?symbol=' + apiform.elements.symbol.value; 
+                    break; 
+                case '/company-news':
+                    apiUrl = '/company-news?symbol=' + apiform.elements.symbol.value + '&from=' + apiform.elements.from.value + '&to=' + apiform.elements.to.value; 
+                    break; 
+                case 'stock/metric':
+                    apiUrl = '/stock/metric?symbol=' + apiform.elements.symbol.value + '&metric=' + apiform.elements.metric.value; 
+                    break; 
+            }
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                var apiresponse = document.querySelector('#apiresponse');
+                console.log(apiresponse.innerText = JSON.stringify(data, null, 2));
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+/* Set background color */
+body {
+    background-color: #c3f4b9;
+  }
+  
+  /* Set font family and color */
+  body {
+    font-family: Arial, sans-serif;
+    color: #333;
+  }
+  
+  /* Set header styles */
+  header {
+    background-color: #333;
+    color: rgb(240, 240, 155);
+    padding: 10px;
+    text-align: center;
+  }
+  
+  /* Set main section styles */
+  main {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  /* Set form styles */
+  form {
+    background-color: rgb(177, 243, 214);
+    border: 1px solid rgb(234, 226, 167);
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  
+  /* Set input field styles */
+  input[type="text"], input[type="date"], select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+  }
+  
+  /* Set button styles */
+  button {
+    background-color: #4CAF50;
+    color: #fff;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  /* Set button hover styles */
+  button:hover {
+    background-color: #45a049;
+  }
+  
+  /* Set table styles */
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  /* Set table header styles */
+  th {
+    background-color: #333;
+    color: #fff;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  /* Set table cell styles */
+  td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  

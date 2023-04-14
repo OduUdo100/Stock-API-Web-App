@@ -1,9 +1,14 @@
-# Time
+# Stock Api Web App
 
 Small JavaScript project. 
-Displays current time
+Uses Finnhub API to gather information from stocks. Has 3 api function calls:
+ * Get the Quote
+ * Get company news between two dates
+ * Gets the company metrics
+
+
 
 Future Implementation
-  * Implementing time from different countries 
-  * Implement current month, day, and year 
-  * Implement alarm clock 
+  * Add visualization to show a graph of the stock prive
+  * User authentication to create accounts  
+  * Implement some type of notification so when a a stock reaches a certain price it will get it. 

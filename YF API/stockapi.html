@@ -6,10 +6,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stock API Web Application </title>
     <link rel="stylesheet" type="text/css" href="/stockapi.css">
-    <script type="application/json" src="/server.js"></script>
+    <script type="application/json" src="/YF API/server.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
 <body>
     <h1> Stock API Web App</h1>
+
+    <header>
+        <nav>
+            <ul>
+                <li><a href= "/YF API/stockhome.html">Home</a></li>
+                <li><a href= "/YF API/stocksignup.html">Signup</a></li>
+                <li><a href= "/YF API/stocklogin.html">Login</a></li>
+ 
+            </ul>
+        </nav>
+    </header>
 
     <form id="apiform">
         <label for="apifunction"> Select API Function: </label>
@@ -21,6 +33,8 @@
         <br />
         <label for="symbol">Symbol:</label>
         <input type="text" name="symbol" id="symbol" />
+        <br />
+        <input type="button" value="See Chart" id="getchart">
         <br />
         <label for="from">From:</label>
         <input type="date" name="from" id="from" pattern="\d{4}-\d{2}-\d{2}"  />
@@ -34,31 +48,49 @@
         <input type="submit" value="Submit" />
     </form>
     <div id="apiresponse"></div>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var apiform = document.querySelector('#apiform');
-            apiform.addEventListener('submit', function(event) {
+    <div id="chart"></div>
+
+<script> 
+    //Load the chart
+    google.charts.load('current', {'packages':['corechart']});
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var apiform = document.querySelector('#apiform');
+        apiform.addEventListener('submit', function(event) {
             event.preventDefault(); 
             var apiUrl; 
-            switch(apiform.elements.apifunction.value){
-                case '/quote':
-                    apiUrl = '/quote?symbol=' + apiform.elements.symbol.value; 
-                    break; 
-                case '/company-news':
-                    apiUrl = '/company-news?symbol=' + apiform.elements.symbol.value + '&from=' + apiform.elements.from.value + '&to=' + apiform.elements.to.value; 
-                    break; 
-                case '/stock/metric':
-                    apiUrl = '/stock/metric?symbol=' + apiform.elements.symbol.value + '&metric=' + apiform.elements.metric.value; 
-                    break; 
-            }
-            fetch(apiUrl)
-                .then(response => response.json())
-                .then(data => {
-                var apiresponse = document.querySelector('#apiresponse');
-                console.log(apiresponse.innerText = JSON.stringify(data, null, 2));
-                });
-            });
+        switch(apiform.elements.apifunction.value){
+            case '/quote':
+                apiUrl = '/quote?symbol=' + apiform.elements.symbol.value; 
+                break; 
+            case '/company-news':
+                apiUrl = '/company-news?symbol=' + apiform.elements.symbol.value + '&from=' + apiform.elements.from.value + '&to=' + apiform.elements.to.value; 
+                break; 
+            case '/stock/metric':
+                apiUrl = '/stock/metric?symbol=' + apiform.elements.symbol.value + '&metric=' + apiform.elements.metric.value; 
+                break; 
+        }
+    fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+            //Generate the response 
+            var apiresponse = document.querySelector('#apiresponse'); 
+            console.log(apiresponse.innerText = JSON.stringify(data, null, 2));
+        })
+        .catch(error => {
+            console.log(error); 
         });
-    </script>
+    });
+
+    // Hide the chart initially
+    document.querySelector('#chart').style.display = 'none';
+
+    // Show the chart when the user clicks the "Get Chart" button
+    document.querySelector('#getchart').addEventListener('click', function() {
+        document.querySelector('#chart').style.display = 'block';
+    });
+
+});
+</script>
 </body>
 </html>
